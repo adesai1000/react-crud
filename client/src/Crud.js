@@ -1,4 +1,3 @@
-// Crud.js
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './Crud.css';
@@ -27,7 +26,6 @@ const Crud = () => {
 
     try {
       if (editProduct) {
-        // Update existing product
         await axios.put(`http://localhost:3000/products/${editProduct._id}`, {
           name: productName,
           price: productPrice,
@@ -35,7 +33,6 @@ const Crud = () => {
           image: productImageLink,
         });
       } else {
-        // Create new product
         await axios.post('http://localhost:3000/products', {
           name: productName,
           price: productPrice,
@@ -44,14 +41,12 @@ const Crud = () => {
         });
       }
 
-      // Clear form fields and reset editing state after submission
       setProductName('');
       setProductPrice('');
       setProductQuantity('');
       setProductImageLink('');
       setEditProduct(null);
 
-      // Refresh product list
       fetchProducts();
     } catch (error) {
       console.error('Error creating/updating product:', error.message);
@@ -59,10 +54,8 @@ const Crud = () => {
   };
 
   const handleEdit = (product) => {
-    // Set the selected product for editing
     setEditProduct(product);
 
-    // Populate form fields with the selected product's values
     setProductName(product.name);
     setProductPrice(product.price);
     setProductQuantity(product.quantity);
@@ -71,10 +64,8 @@ const Crud = () => {
 
   const handleDelete = async (id) => {
     try {
-      // Delete product
       await axios.delete(`http://localhost:3000/products/${id}`);
 
-      // Refresh product list
       fetchProducts();
     } catch (error) {
       console.error('Error deleting product:', error.message);
